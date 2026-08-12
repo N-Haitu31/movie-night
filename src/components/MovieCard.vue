@@ -1,5 +1,5 @@
 <script setup>
-defineProps(["movie"]);
+defineProps(["movie", "isFavorite"]);
 const emit = defineEmits(["toggle-favorite", "display-details"]);
 </script>
 
@@ -13,12 +13,14 @@ const emit = defineEmits(["toggle-favorite", "display-details"]);
         :alt="movie.title"
         class="h-64 w-full object-cover"
       />
-      <button
-        class="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70"
-        @click="emit('toggle-favorite', movie.id)"
-      >
-        ♡
-      </button>
+       <button
+         class="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70"
+         @click="emit('toggle-favorite', movie.id)"
+       >
+         <span class="text-xl hover:scale-105" :class="{ 'text-red-500': isFavorite } ">
+           {{ isFavorite ? '♥' : '♡' }}
+         </span>
+       </button>
     </div>
 
     <div class="p-4">

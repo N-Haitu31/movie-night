@@ -13,6 +13,15 @@ const errorMessage = ref("");
 const search = ref("");
 const selectedCategory = ref("Tous");
 const selectedMovie = ref(null);
+const favorites = ref([]);
+
+function toggleFavorite(movieId) {
+  if (favorites.value.includes(movieId)) {
+    favorites.value = favorites.value.filter((id) => id !== movieId);
+  } else {
+    favorites.value.push(movieId);
+  }
+}
 
 async function loadMovies() {
   isLoading.value = true;
@@ -50,6 +59,7 @@ const filteredMovies = computed(() =>
     return matchesCategory && matchesSearch;
   }),
 );
+console.log(filteredMovies);
 </script>
 
 <template>
@@ -78,15 +88,16 @@ const filteredMovies = computed(() =>
         v-else
         class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
       >
-        <MovieCard
-          v-for="movie in filteredMovies"
-          :key="movie.id"
-          :movie="movie"
-          @toggle-favorite="console.log($event)"
-          @display-details="
-            selectedMovie = movies?.find((movie) => movie.id === $event) || null
-          "
-        />
+         <MovieCard
+           v-for="movie in filteredMovies"
+           :key="movie.id"
+           :movie="movie"
+           :is-favorite="favorites.includes(movie.id)"
+           @toggle-favorite="toggleFavorite"
+           @display-details="
+             selectedMovie = movies?.find((movie) => movie.id === $event) || null
+           "
+         />
       </div>
 
       <div
