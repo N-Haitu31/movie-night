@@ -1,7 +1,14 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
-  <HelloWorld />
+  <div id="app">
+    <AppHeader />
+    <main>
+      <MovieCard />
+      <MovieDetails />
+    </main>
+    <AppFooter />
+  </div>
 </template>
