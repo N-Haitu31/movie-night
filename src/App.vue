@@ -5,6 +5,7 @@ import AppFooter from "./components/AppFooter.vue";
 import TopSection from "./components/TopSection.vue";
 import MovieCard from "./components/MovieCard.vue";
 import MovieDetails from "./components/MovieDetails.vue";
+import InfoCard from "./components/InfoCard.vue";
 
 const movies = ref([]);
 const isLoading = ref(true);
@@ -13,10 +14,23 @@ const search = ref("");
 const selectedCategory = ref("Tous");
 
 async function loadMovies() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  const response = await fetch("/data/movies.json");
-  movies.value = await response.json();
-  isLoading.value = false;
+  isLoading.value = true;
+  errorMessage.value = "";
+
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const response = await fetch("/data/movies.json");
+
+    if (!response.ok) {
+      throw new Error("Réponse invalide du serveur");
+    }
+
+    movies.value = await response.json();
+  } catch (error) {
+    errorMessage.value = "Une erreur est survenue pendant le chargement.";
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 onMounted(() => {
@@ -47,6 +61,14 @@ const filteredMovies = computed(() =>
         <div class="h-30 w-30 animate-spin rounded-full border-4 border-slate-700 border-t-red-500"></div>
         <p class="text-slate-100">Chargement des films...</p>
       </div>
+
+      <InfoCard
+        v-else-if="errorMessage"
+        title="Impossible de charger les films"
+        :message="errorMessage"
+        button-label="Réessayer"
+        @action="loadMovies"
+      />
 
       <div v-else class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MovieCard
