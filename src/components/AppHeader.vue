@@ -2,7 +2,7 @@
 
 <template>
   <header
-    class="mx-auto flex max-w-7xl flex-col gap-4 border-b border-slate-800 bg-slate-950/95 px-4 py-5 sm:flex-row sm:items-center sm:justify-between"
+    class="flex max-w-7xl flex-col gap-4 border-b border-slate-800 bg-slate-950/95 px-4 py-5 sm:flex-row sm:items-center sm:justify-between"
   >
     <button class="text-left text-xl font-black tracking-tight text-white">
       MOVIE NIGHT
