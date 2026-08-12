@@ -1,6 +1,6 @@
 <script setup>
 defineProps(["movie"]);
-const emit = defineEmits(["toggle-favorite", "display-details-pressed"]);
+const emit = defineEmits(["toggle-favorite", "display-details"]);
 </script>
 
 <template>
@@ -37,7 +37,7 @@ const emit = defineEmits(["toggle-favorite", "display-details-pressed"]);
 
       <button
         class="w-full rounded-lg bg-slate-800 py-2 text-sm text-white transition-colors hover:bg-slate-700"
-        @click="emit('display-details-pressed', movie.id)"
+        @click="emit('display-details', movie.id)"
       >
         Voir le détail
       </button>

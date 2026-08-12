@@ -13,16 +13,6 @@ const errorMessage = ref("");
 const search = ref("");
 const selectedCategory = ref("Tous");
 const selectedMovie = ref(null);
-const showModal = ref(false);
-
-function openModal(movieId) {
-  selectedMovie.value = movies.value.find((movie) => movie.id === movieId);
-  showModal.value = true;
-}
-
-function closeModal() {
-  showModal.value = false;
-}
 
 async function loadMovies() {
   isLoading.value = true;
@@ -65,6 +55,7 @@ const filteredMovies = computed(() =>
 <template>
   <div id="app" class="flex min-h-screen flex-col bg-slate-950 text-white">
     <AppHeader />
+
     <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
       <TopSection v-model:search="search" v-model:category="selectedCategory" />
 
@@ -92,15 +83,21 @@ const filteredMovies = computed(() =>
           :key="movie.id"
           :movie="movie"
           @toggle-favorite="console.log($event)"
-          @display-details-pressed="openModal"
+          @display-details="
+            selectedMovie = movies?.find((movie) => movie.id === $event) || null
+          "
         />
       </div>
+
+      <div
+        v-if="selectedMovie"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+        @click.self="selectedMovie = null"
+      >
+        <MovieDetails :movie="selectedMovie" @close="selectedMovie = null" />
+      </div>
     </main>
+
     <AppFooter />
   </div>
-  <MovieDetails
-    v-if="showModal"
-    :movie="selectedMovie"
-    @close-button-pressed="closeModal"
-  />
 </template>
