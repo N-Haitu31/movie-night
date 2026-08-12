@@ -10,7 +10,6 @@ import MovieDetails from "./components/MovieDetails.vue";
     <AppHeader />
     <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
       <MovieCard />
-      <MovieDetails />
     </main>
     <AppFooter />
   </div>
