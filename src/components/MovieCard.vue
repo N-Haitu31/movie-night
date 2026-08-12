@@ -1,5 +1,6 @@
 <script setup>
 defineProps(['movie'])
+const emit = defineEmits(['toggle-favorite'])
 </script>
 
 <template>
@@ -12,6 +13,7 @@ defineProps(['movie'])
       />
       <button
         class="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 text-white hover:bg-black/70"
+        @click="emit('toggle-favorite', movie.id)"
       >
         ♡
       </button>

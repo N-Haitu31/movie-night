@@ -75,6 +75,7 @@ const filteredMovies = computed(() =>
           v-for="movie in filteredMovies"
           :key="movie.id"
           :movie="movie"
+          @toggle-favorite="console.log($event)"
         />
       </div>
     </main>
