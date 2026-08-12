@@ -1,6 +1,7 @@
 <script setup>
 import AppHeader from "./components/AppHeader.vue";
 import AppFooter from "./components/AppFooter.vue";
+import TopSection from "./components/TopSection.vue";
 import MovieCard from "./components/MovieCard.vue";
 import MovieDetails from "./components/MovieDetails.vue";
 
@@ -56,7 +57,8 @@ const testMovies = [
   <div id="app" class="flex min-h-screen flex-col bg-slate-950 text-white">
     <AppHeader />
     <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <TopSection />
+      <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MovieCard
           v-for="movie in testMovies"
           :key="movie.id"
