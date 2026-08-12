@@ -1,11 +1,11 @@
 <script setup>
-const {favoriteCount} = defineProps({
+const { favoriteCount } = defineProps({
   favoriteCount: {
     type: Number,
     required: true,
     default: 0,
   },
-})
+});
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const {favoriteCount} = defineProps({
       <button
         class="rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-slate-800"
       >
-        Favoris <span> {{favoriteCount}} </span>
+        Favoris <span> {{ favoriteCount }} </span>
       </button>
     </nav>
   </header>
