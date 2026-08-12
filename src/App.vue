@@ -12,6 +12,17 @@ const isLoading = ref(true);
 const errorMessage = ref("");
 const search = ref("");
 const selectedCategory = ref("Tous");
+const selectedMovie = ref(null);
+const showModal = ref(false);
+
+function openModal(movieId) {
+  selectedMovie.value = movies.value.find((movie) => movie.id === movieId);
+  showModal.value = true;
+}
+
+function closeModal() {
+  showModal.value = false;
+}
 
 async function loadMovies() {
   isLoading.value = true;
@@ -58,7 +69,9 @@ const filteredMovies = computed(() =>
       <TopSection v-model:search="search" v-model:category="selectedCategory" />
 
       <div v-if="isLoading" class="mt-16 flex flex-col items-center gap-3">
-        <div class="h-30 w-30 animate-spin rounded-full border-4 border-slate-700 border-t-red-500"></div>
+        <div
+          class="h-30 w-30 animate-spin rounded-full border-4 border-slate-700 border-t-red-500"
+        ></div>
         <p class="text-slate-100">Chargement des films...</p>
       </div>
 
@@ -70,15 +83,24 @@ const filteredMovies = computed(() =>
         @action="loadMovies"
       />
 
-      <div v-else class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        v-else
+        class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <MovieCard
           v-for="movie in filteredMovies"
           :key="movie.id"
           :movie="movie"
           @toggle-favorite="console.log($event)"
+          @display-details-pressed="openModal"
         />
       </div>
     </main>
     <AppFooter />
   </div>
+  <MovieDetails
+    v-if="showModal"
+    :movie="selectedMovie"
+    @close-button-pressed="closeModal"
+  />
 </template>
