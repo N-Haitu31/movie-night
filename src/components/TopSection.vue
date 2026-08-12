@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
 const categories = ['Tous', 'Action', 'Comédie', 'Science-fiction', 'Animation']
-const categorieSelect = ref('Tous')
+const selectedCategory = defineModel('category')
+const search = defineModel('search')
 </script>
 
 <template>
@@ -19,13 +19,13 @@ const categorieSelect = ref('Tous')
     </p>
 
     <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-      <input type="search" placeholder="Rechercher un film..." aria-label="Rechercher un film"
+      <input v-model="search" type="search" placeholder="Rechercher un film..." aria-label="Rechercher un film"
         class="w-full flex-1 rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-rose-500">
 
       <div class="flex flex-wrap gap-2">
-        <button v-for="category in categories" :key="category" type="button" @click="categorieSelect = category"
+        <button v-for="category in categories" :key="category" type="button" @click="selectedCategory = category"
           class="rounded-full px-4 py-2 text-sm font-semibold transition"
-          :class="category === categorieSelect
+          :class="category === selectedCategory
             ? 'bg-rose-500 text-white'
             : 'bg-slate-900 text-slate-300 hover:bg-slate-800'">
           {{ category }}

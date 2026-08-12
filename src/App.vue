@@ -4,7 +4,10 @@ import AppFooter from "./components/AppFooter.vue";
 import TopSection from "./components/TopSection.vue";
 import MovieCard from "./components/MovieCard.vue";
 import MovieDetails from "./components/MovieDetails.vue";
+import { computed, ref } from "vue";
 
+const search = ref("");
+const selectedCategory = ref("Tous");
 const testMovies = [
   {
     id: 1,
@@ -51,16 +54,29 @@ const testMovies = [
     description: "Paul Atreides rejoint la planète Arrakis et se retrouve au cœur d'un conflit gigantesque.",
   },
 ];
+
+const filteredMovies = computed(() =>
+  testMovies.filter((movie) => {
+    const matchesCategory =
+      selectedCategory.value === "Tous" ||
+      movie.category === selectedCategory.value;
+    const matchesSearch = movie.title
+      .toLowerCase()
+      .includes(search.value.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  }),
+);
 </script>
 
 <template>
   <div id="app" class="flex min-h-screen flex-col bg-slate-950 text-white">
     <AppHeader />
     <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
-      <TopSection />
+      <TopSection v-model:search="search" v-model:category="selectedCategory" />
       <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MovieCard
-          v-for="movie in testMovies"
+          v-for="movie in filteredMovies"
           :key="movie.id"
           :movie="movie"
         />
