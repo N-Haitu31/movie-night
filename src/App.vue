@@ -59,12 +59,13 @@ const filteredMovies = computed(() =>
     return matchesCategory && matchesSearch;
   }),
 );
-console.log(filteredMovies);
+
+const favoriteCount = computed(() => favorites.value.length);
 </script>
 
 <template>
-  <div id="app" class="flex min-h-screen flex-col bg-slate-950 text-white">
-    <AppHeader />
+    <div id="app" class="flex min-h-screen flex-col bg-slate-950 text-white">
+      <AppHeader :favoriteCount="favoriteCount" />
 
     <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
       <TopSection v-model:search="search" v-model:category="selectedCategory" />
