@@ -1,4 +1,6 @@
 <script setup>
+const emit = defineEmits(["navigate"]);
+
 const { favoriteCount } = defineProps({
   favoriteCount: {
     type: Number,
@@ -6,6 +8,10 @@ const { favoriteCount } = defineProps({
     default: 0,
   },
 });
+
+function navigateTo(view) {
+  emit("navigate", view);
+}
 </script>
 
 <template>
@@ -15,17 +21,19 @@ const { favoriteCount } = defineProps({
     <button class="text-left text-xl font-black tracking-tight text-white">
       MOVIE NIGHT
     </button>
-    <nav class="flex items-center gap-2">
-      <button
-        class="rounded-full bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition"
-      >
-        Films
-      </button>
-      <button
-        class="rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-slate-800"
-      >
-        Favoris <span> {{ favoriteCount }} </span>
-      </button>
-    </nav>
+     <nav class="flex items-center gap-2">
+       <button
+         class="rounded-full bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition"
+         @click="navigateTo('films')"
+       >
+         Films
+       </button>
+       <button
+         class="rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-slate-800"
+         @click="navigateTo('favorites')"
+       >
+         Favoris {{ favoriteCount }}
+       </button>
+     </nav>
   </header>
 </template>

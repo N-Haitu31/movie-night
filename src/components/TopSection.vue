@@ -8,27 +8,41 @@ const categories = [
 ];
 const selectedCategory = defineModel("category");
 const search = defineModel("search");
+const currentView = defineModel("currentView");
 </script>
 
 <template>
   <section
     class="rounded-2xl border border-slate-800 bg-slate-950 px-6 py-10 sm:px-10"
   >
-    <p class="text-xs font-bold tracking-[0.2em] text-rose-500 uppercase">
-      Votre soirée commence ici
-    </p>
+    <div v-if="currentView === 'favorites'">
+      <p class="text-sm font-bold uppercase tracking-[0.2em] text-rose-400">
+        Ma sélection
+      </p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
+        Mes favoris
+      </h1>
+      <p class="mt-4 text-slate-400">
+        Retrouvez ici les films que vous avez gardés pour plus tard.
+      </p>
+    </div>
+    <div v-else>
+      <p class="text-xs font-bold tracking-[0.2em] text-rose-500 uppercase">
+        Votre soirée commence ici
+      </p>
 
-    <h1
-      class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
-    >
-      Quel film pour ce soir ?
-    </h1>
+      <h1
+        class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
+      >
+        Quel film pour ce soir ?
+      </h1>
 
-    <p class="mt-3 text-sm text-slate-400">
-      Recherchez un titre, filtrez par catégorie et gardez vos favoris.
-    </p>
+      <p class="mt-3 text-sm text-slate-400">
+        Recherchez un titre, filtrez par catégorie et gardez vos favoris.
+      </p>
+    </div>
 
-    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div v-if="currentView === 'films'" class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
       <input
         v-model="search"
         type="search"
