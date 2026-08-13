@@ -30,7 +30,7 @@ async function loadMovies() {
 
   try {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    const response = await fetch("/data/movies.json");
+    const response = await fetch(`${import.meta.env.BASE_URL}data/movies.json`);
 
     if (!response.ok) {
       throw new Error("Réponse invalide du serveur");
